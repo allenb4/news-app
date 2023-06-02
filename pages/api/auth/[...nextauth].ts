@@ -3,6 +3,7 @@ import Credentials from 'next-auth/providers/credentials';
 import { http } from '@/utils/http';
 
 export const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     Credentials({
       name: 'Credentials',
@@ -14,15 +15,14 @@ export const authOptions = {
         },
         password: { label: 'Password', type: 'password' }
       },
+      
       async authorize(credentials, req) {
         const { username: email, password } = credentials as {
           username: string
           password: string
         };
-
         const response = await http.post('/api/login', { email, password });
         const accessToken = response.data?.access_token;
-
         const userResponse = await http.get('/api/user', {
           headers: {
             'Authorization': `Bearer ${accessToken}`

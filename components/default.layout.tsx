@@ -40,11 +40,14 @@ function DefaultLayout({ children }: Props) {
 
           </div>
         </header>
+        {session ? (
         <main className="w-full py-4 px-4 md:px-20 h-full bg-gray-200">
           <div className="flex md:flex-row justify-between mx-auto max-w-7xl">
             {children}
           </div>
-        </main>
+        </main>)
+        : '' }
+
       </div>
     </div>
   );
